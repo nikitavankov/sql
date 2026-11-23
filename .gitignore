@@ -1,2 +1,4 @@
 ansible.cfg
 inventory
+.pre-commit-config.yaml
+.ansible-lint
