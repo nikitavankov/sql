@@ -1,0 +1,11 @@
+---
+- name: Ensure dnf-plugins-core is installed
+  ansible.builtin.dnf:
+    name: dnf-plugins-core
+    state: present
+    disablerepo: "{{ repository_disable_repos }}"
+
+- name: Enable CRB repository on Rocky Linux 9
+  ansible.builtin.command: dnf config-manager --set-enabled crb
+  changed_when: false
+  when: ansible_distribution_major_version | int >= 9

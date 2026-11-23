@@ -1,0 +1,32 @@
+---
+- name: Copy PGDG GPG key to target
+  ansible.builtin.copy:
+    src: "{{ repository_pgdg_gpg_key }}"
+    dest: "/etc/pki/rpm-gpg/{{ repository_pgdg_gpg_key }}"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Import PGDG GPG key
+  ansible.builtin.rpm_key:
+    state: present
+    key: "/etc/pki/rpm-gpg/{{ repository_pgdg_gpg_key }}"
+
+- name: Copy PGDG repo RPM to target
+  ansible.builtin.copy:
+    src: "{{ repository_pgdg_rpm }}"
+    dest: "{{ repository_staging_dir }}/{{ repository_pgdg_rpm }}"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Install PGDG repository from local file
+  ansible.builtin.dnf:
+    name: "{{ repository_staging_dir }}/{{ repository_pgdg_rpm }}"
+    state: present
+    disable_gpg_check: false
+    disablerepo: "{{ repository_disable_repos }}"
+
+- name: Disable built-in PostgreSQL module (AppStream)
+  ansible.builtin.command: dnf -qy --disablerepo='{{ repository_disable_repos }}' module disable postgresql
+  changed_when: false
