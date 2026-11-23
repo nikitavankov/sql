@@ -1,0 +1,23 @@
+---
+- name: Ensure staging directory exists
+  ansible.builtin.file:
+    path: "{{ repository_staging_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Include EPEL tasks
+  ansible.builtin.include_tasks: epel.yml
+  when: repository_enable_epel | bool
+  tags: [repository, epel]
+
+- name: Include CRB tasks
+  ansible.builtin.include_tasks: crb.yml
+  when: repository_enable_crb | bool
+  tags: [repository, crb]
+
+- name: Include PGDG tasks
+  ansible.builtin.include_tasks: pgdg.yml
+  when: repository_enable_pgdg | bool
+  tags: [repository, pgdg]

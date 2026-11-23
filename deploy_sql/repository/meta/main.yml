@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  role_name: repository
+  author: Nikita Vankov
+  description: Configure EPEL, CRB and PGDG repositories on Rocky Linux 9
+  license: MIT
+  min_ansible_version: "2.14"
+  platforms:
+    - name: EL
+      versions: ["9"]
+  galaxy_tags: [repository, pgdg, epel, rockylinux]
+dependencies: []

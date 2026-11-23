@@ -1,0 +1,19 @@
+---
+repository_pgdg_version: 16
+
+repository_enable_epel: true
+repository_enable_crb: true
+repository_enable_pgdg: true
+
+# Имена файлов в files/
+repository_epel_rpm: epel-release-latest-9.noarch.rpm
+repository_pgdg_rpm: pgdg-redhat-repo-latest.noarch.rpm
+repository_epel_gpg_key: RPM-GPG-KEY-EPEL-9
+repository_pgdg_gpg_key: PGDG-RPM-GPG-KEY-RHEL
+
+# Staging-каталог на целевом хосте
+repository_staging_dir: /var/tmp/ansible-repo-rpms
+
+# Репозитории, которые нужно игнорировать при установке локальных RPM
+# (в офлайн-среде они недоступны и ломают dnf)
+repository_disable_repos: "pgdg*"
